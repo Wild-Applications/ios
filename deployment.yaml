@@ -1,0 +1,57 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ios
+  labels:
+   name: ios
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: jwt-secret
+  namespace: ios
+type: Opaque
+stringData:
+  secret: KO/9ASG/XcOq0QEpxE2/VwDlCYVkBt4Si0ILMb4UYXzm9l+KZ0aJdGf0LZ0OtvPp41KrMuASJmI5mo6XUbkX1FmswAqQRdOvzv1vgugN4kiTPK/zUgRwn8ZZj0qiDG4skP52DyeYJw/bEJQi4NBP2sLxQAJnSjnErVsaQ4a7a8QywidUmzWcEAg3exMPnsyqticoPh/9VQCJZ4W0fS3Lxs7VcmYRb8rsc9Hm84iaoDU4pqDofpNaOUEBQ3DYZA9DZED8eHtmiH6e9LZn9UV59A9SoABXVtpMrjzKLUqgK/11lDcB+ahjY7XVg6zUERalfj095LBVMaH4gycH2MMgEg==
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: deployment
+  namespace: ios
+  labels:
+    app: ios
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: ios
+    spec:
+      containers:
+      - name: ios
+        image: wildapps/ios:0.0.1
+        ports:
+        - containerPort: 8080
+        env:
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: jwt-secret
+              key: secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service
+  namespace: ios
+  labels:
+    app: ios
+spec:
+  type: ClusterIP
+  ports:
+  - port: 1295
+    targetPort: 8080
+  selector:
+    app: ios
+  externalName: ios
