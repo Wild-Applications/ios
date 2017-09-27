@@ -81,8 +81,8 @@ server.use(cors.actual);
 
 
 
-// var tableRoutes = require('./routes/table.routes.js');
-// tableRoutes.applyRoutes(server, '/tables');
+var webappRoutes = require('./routes/webapp.routes.js');
+webappRoutes.applyRoutes(server, '/webapp');
 
 
 //

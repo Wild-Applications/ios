@@ -1,7 +1,7 @@
 {
-  "name": "ios",
+  "name": "mobile",
   "version": "0.0.1",
-  "description": "Microservice acting as a facade for all ios processes within the app",
+  "description": "Microservice acting as a facade for all mobile processes within the app",
   "main": "./src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

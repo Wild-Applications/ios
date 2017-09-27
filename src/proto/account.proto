@@ -1,0 +1,38 @@
+syntax = "proto3";
+//this belongs to this microservice
+package account;
+
+//Methods exposed to client
+service AccountService {
+  rpc get (Empty) returns (GetReply){}
+  rpc create (CreateRequest) returns (CreateReply){}
+  rpc authenticate (AuthenticateRequest) returns (TokenReply){}
+}
+
+// Message Type definition for user
+message Empty {
+}
+
+message GetReply {
+  string username = 1;
+  string email = 2;
+}
+
+message CreateRequest {
+  string username = 1;
+  string password = 2;
+  string email = 3;
+}
+
+message CreateReply {
+  string token = 1;
+}
+
+message AuthenticateRequest {
+  string username = 1;
+  string password = 2;
+}
+
+message TokenReply {
+  string token = 1;
+}
