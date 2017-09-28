@@ -91,6 +91,7 @@ router.post('/order', function(req, res, next){
     var formatted = [];
     for(var item in order.contents){
       var nextProd = order.contents[item];
+      console.log(nextProd);
       for(var i=0;i<nextProd.quantity;i++){
         formatted[formatted.length] = nextProd.product._id;
       }
