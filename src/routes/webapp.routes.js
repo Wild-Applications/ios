@@ -20,6 +20,9 @@ var accountClient = new accountDescriptor.AccountService('service.account:1295',
 var orderDescriptor = grpc.load(__dirname + '/../proto/order.proto').order;
 var orderClient = new orderDescriptor.FulfilmentService('service.fulfilment:1295', grpc.credentials.createInsecure());
 
+var paymentDescriptor = grpc.load(__dirname + '/../proto/payment.proto').payment;
+var paymentClient =  new paymentDescriptor.PaymentService('service.payment:1295', grpc.credentials.createInsecure());
+
 router.get('/scan/:table', function(req, res, next){
   //table&premises
   //get table owner from table service
@@ -100,6 +103,9 @@ router.post('/order', function(req, res, next){
     delete order.contents;
     var orderToCreate = order;
     orderToCreate.owner = decodedToken.sub;
+    orderToCreate.source = order.source;
+    orderToCreate.storePaymentDetails = order.storePaymentDetails;
+    console.log("source ", order.source);
     orderClient.create(orderToCreate, metadata, function(err, result){
       if(err){
         res.status(400);
@@ -155,6 +161,31 @@ router.post("/login", function(req,res,next){
     res.status(400);
     res.send(error);
   }
+})
+
+router.get('/payments/stored', verifyToken({secret:secret}), function(req,res,next){
+  var token = req.header('Authorization');
+  tokenHelper.getTokenContent(token, secret, function(err, decodedToken){
+    if(err){
+      res.status(400);
+      res.send(err);
+      return;
+    }
+    var metadata = new grpc.Metadata();
+    metadata.add('authorization', tokenHelper.getRawToken(token));
+
+    paymentClient.getStoredPaymentMethods({}, metadata, function(err, customer){
+      if(err){
+        return res.send(err);
+      }
+      res.send(customer);
+    })
+  });
+});
+
+router.get('/token', verifyToken({secret:secret}), function(req,res,next){
+  res.status(201);
+  res.send();
 })
 
 
