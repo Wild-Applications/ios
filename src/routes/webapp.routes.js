@@ -161,7 +161,19 @@ router.post("/login", function(req,res,next){
     res.status(400);
     res.send(error);
   }
-})
+});
+
+router.get("/user", verifyToken({secret:secret}), function(req, res, next){
+  var token = req.header('Authorization');
+  var metadata = new grpc.Metadata();
+  metadata.add('authorization', tokenHelper.getRawToken(token));
+  accountClient.get({}, metadata, function(err, user){
+    if(err){
+      res.status(500).send(err);
+    }
+    res.send(user);
+  })
+});
 
 router.get('/payments/stored', verifyToken({secret:secret}), function(req,res,next){
   var token = req.header('Authorization');
@@ -184,9 +196,21 @@ router.get('/payments/stored', verifyToken({secret:secret}), function(req,res,ne
 });
 
 router.get('/token', verifyToken({secret:secret}), function(req,res,next){
-  res.status(201);
-  res.send();
-})
+  res.json(204);
+});
+
+router.get('/orders', verifyToken({secret:secret}), function(req,res,next){
+  var token = req.header('Authorization');
+  var metadata = new grpc.Metadata();
+  metadata.add('authorization', tokenHelper.getRawToken(token));
+  orderClient.get({}, metadata, function(orderErr, results){
+    if(orderErr){
+      res.send(orderErr);
+    }else{
+      res.send(results);
+    }
+  });
+});
 
 
 module.exports = router;
