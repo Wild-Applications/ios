@@ -31,6 +31,7 @@ message CreateReply {
 message AuthenticateRequest {
   string username = 1;
   string password = 2;
+  string accountType = 3;
 }
 
 message TokenReply {
