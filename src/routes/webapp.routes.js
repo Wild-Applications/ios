@@ -146,6 +146,7 @@ router.post("/register", function(req,res,next){
 router.post("/login", function(req,res,next){
   if( req.body && req.body.email && req.body.password ){
     req.body.username = req.body.email;
+    req.body.customer = true;
     delete req.body.email;
     accountClient.authenticate(req.body, function(err, response){
       if(err)
