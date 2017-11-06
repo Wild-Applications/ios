@@ -126,6 +126,7 @@ router.post("/register", function(req,res,next){
       userToCreate.username = req.body.email;
       userToCreate.password = req.body.password;
       userToCreate.email = req.body.email;
+      userToCreate.accountType = "CUSTOMER";
 
     accountClient.create(userToCreate, function(err, response){
       if(err){
