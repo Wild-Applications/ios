@@ -10,6 +10,13 @@ service PremisesService {
   rpc delete ( DeleteRequest ) returns (Empty){}
   rpc getOwner (PremisesId) returns (OwnerId){}
   rpc getFromOwner (ID) returns (GetReply){}
+  rpc getPremises(PremisesId) returns (GetReply){}
+  rpc open (Empty) returns (Empty) {}
+  rpc close (Empty) returns (Empty){}
+}
+
+service GuestService {
+  rpc get (ID) returns (GetReply){}
 }
 
 message Empty {
@@ -23,6 +30,7 @@ message GetReply {
   string _id = 1;
   string name = 2;
   string description = 3;
+  bool open = 4;
 }
 
 message CreateRequest {
