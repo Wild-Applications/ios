@@ -42,10 +42,15 @@ router.get('/scan/:table', function(req, res, next){
       Promise.all(requests).then(allData => {
         console.log(allData);
         var returnObj = {};
-        returnObj.table = table;
-        returnObj.premises = allData[0];
-        returnObj.menu = allData[1];
-        res.send(returnObj);
+        if(allData[0].open){
+          returnObj.table = table;
+          returnObj.premises = allData[0];
+          returnObj.menu = allData[1];
+          res.send(returnObj);
+        }else{
+          res.status = 400;
+          res.send({message: "This restaurant isn't currently open"});
+        }
       }, error => {
         console.log(error);
         res.send("TEST " + JSON.stringify(error));
