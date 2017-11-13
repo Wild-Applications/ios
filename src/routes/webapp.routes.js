@@ -28,7 +28,7 @@ router.get('/scan/:table', function(req, res, next){
   //table&premises
   //get table owner from table service
   //get menu from menu service
-
+  console.log("Got Here")
   var tableDescriptor = grpc.load(__dirname + '/../proto/table.proto').table;
   var tableClient = new tableDescriptor.TableService('service.table:1295', grpc.credentials.createInsecure());
   tableClient.get({_id:req.params.table}, function(err, table){
