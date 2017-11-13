@@ -50,7 +50,7 @@ router.get('/scan/:table', function(req, res, next){
           res.send(returnObj);
         }else{
           var error = errors["0001"];
-          res.status(error.status).send({code: "07000001": error:error.message});
+          res.status(error.status).send({code: "07000001", error:error.message});
         }
       }, error => {
         console.log(error);
