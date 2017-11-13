@@ -3,7 +3,8 @@ router = new Router(),
 verifyToken = require('restify-jwt'),
 tokenHelper = require('../helpers/token.helper.js'),
 restify = require('restify'),
-grpc = require("grpc");
+grpc = require("grpc"),
+errors = require('../errors/errors.json');
 
 var secret = process.env.JWT_SECRET;
 
@@ -48,8 +49,8 @@ router.get('/scan/:table', function(req, res, next){
           returnObj.menu = allData[1];
           res.send(returnObj);
         }else{
-          res.status = 400;
-          res.send({message: "This restaurant isn't currently open"});
+          var error = errors["0001"];
+          res.status(error.status).send({code: "07000001": error:error.message});
         }
       }, error => {
         console.log(error);
