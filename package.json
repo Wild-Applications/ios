@@ -13,7 +13,8 @@
     "bunyan": "^1.8.12",
     "grpc": "^1.4.1",
     "jsonwebtoken": "^7.4.2",
-    "restify": "^4.3.1",
+    /*"restify": "^4.3.1",*/
+    "restify": "6.3.2",
     "restify-cors-middleware": "^1.0.1",
     "restify-errors": "^5.0.0",
     "restify-jwt": "^0.4.0",
