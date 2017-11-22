@@ -2,6 +2,8 @@ syntax = "proto3";
 //this belongs to this microservice
 package menu;
 
+import "./product.proto";
+
 //Methods exposed to client
 service MenuService {
   rpc getAll (Empty) returns (GetAllReply){}
@@ -33,7 +35,7 @@ message product {
 
 message contentItem {
   string title = 1;
-  repeated product products = 3;
+  repeated product.GetReply products = 3;
 }
 
 
