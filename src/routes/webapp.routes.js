@@ -115,10 +115,12 @@ router.post('/order', function(req, res, next){
     console.log("source ", order.source);
     orderClient.create(orderToCreate, metadata, function(err, result){
       if(err){
+        console.log('err',err);
         res.status(400);
         res.send(err);
         return;
       }
+      console.log('result', result);
       res.send(result);
     });
   });
