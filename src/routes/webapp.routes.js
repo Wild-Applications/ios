@@ -116,7 +116,7 @@ router.post('/order', function(req, res, next){
     orderClient.create(orderToCreate, metadata, function(err, result){
       if(err){
         console.log('err',err);
-        res.status(400);
+        res.status(err.code || 500);
         res.send(err);
         return;
       }
