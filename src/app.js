@@ -6,7 +6,7 @@ var restify = require('restify'),
 restifyPlugins = require('restify-plugins'),
 Logger = require('bunyan'),
 corsMiddleware = require('restify-cors-middleware'),
-verifyToken = require('restify-jwt'),
+verifyToken = require('restify-jwt-community'),
 jwt = require('jsonwebtoken'),
 iosHelper = require('./helpers/ios.helper.js');
 
