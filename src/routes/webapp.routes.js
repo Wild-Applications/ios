@@ -161,8 +161,8 @@ router.post("/login", function(req,res,next){
     accountClient.authenticate(req.body, function(err, response){
       if(err)
       {
-        res.status(401);
-        res.send(err);
+        res.status(err.code || 500);
+        res.send(err.message);
       }else{
         res.send(response);
       }
